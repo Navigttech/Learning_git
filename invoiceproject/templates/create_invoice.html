@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Invoice</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        form {
+            max-width: 925px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input, select {
+            width: calc(100% - 16px);
+            padding: 10px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Create Invoice</h1>
+    
+
+
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}" role="alert">
+        <h4 class="alert-heading">Well done!</h4>
+        <p>{{ message }} </p>
+        <hr>
+        <p class="mb-0">Come back again!<button type="submit" name="print_button" onclick="print_invoice()">Print Invoice</button></p>
+      </div>
+      {% endfor %}
+      {% endif %}
+    <form method="post" action="/create_invoice">
+        {% csrf_token %}
+        <label for="client_name">Client Name</label>
+        <input type="text" name="client_name" id="client_name" required>
+
+        <label for="client_address">Client Address</label>
+        <textarea name="client_address" id="client_address" rows="4" required></textarea>
+
+        <label for="client_gstin">Client GSTIN</label>
+        <input type="text" name="client_gstin" id="client_gstin" required>
+
+        <label for="client_contact_details">Client Contact Details</label>
+        <input type="text" name="client_contact_details" id="client_contact_details" required>
+
+        <label for="client_country">Client Country</label>
+        <input type="text" name="client_country" id="client_country" required>
+
+        <label for="client_statecode">Client Statecode</label>
+        <input type="text" name="client_statecode" id="client_statecode" required>
+
+        <label for="invoice_no">Invoice no.</label>
+        <input type="text" name="invoice_no" id="invoice_no" required>
+
+        <label for="invoice_date">Invoice Date</label>
+        <input type="date" name="invoice_date" id="invoice_date" required>
+
+        {% comment %} <label for="client">Client</label> {% endcomment %}
+        {% comment %} <select name="client" id="client" required>
+            <option value="" disabled selected>Select Client</option>
+            <!-- Add dynamic options based on your clients -->
+        </select> {% endcomment %}
+
+        <!-- Add other fields as needed -->
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Service_accounting_code</th>
+                    <th>Description_of_service</th>
+                    <th>No. of Hours</th>
+                    <th>Value($)</th>
+                    <th>Taxable Value(INR)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" name="service_accounting_code" required></td>
+                    <td><input type="text" name="description_of_service" required></td>
+                    <td><input type="text" name="hours_units" required></td>
+                    <td><input type="text" name="value_usd" required></td>
+                    <td><input type="text" name="taxable_value_inr" required></td>
+                </tr>
+            </tbody>
+        </table>
+        <label for="tax">Tax</label>
+        <input type="text" name="tax" id="Tax" required>
+        <label for="tax">Total Amount</label>
+        <input type="text" name="total_amount" id="total_amount" required>
+        {% comment %} <label for="Total_in_Words">Total(in words)</label>
+        <input type="text" name="Total_in_Words" id="Total_in_Words" required> {% endcomment %}
+
+
+        <button type="submit" name="submit_button">Submit</button>
+    </form>
+</body>
+</html>
